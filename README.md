@@ -68,7 +68,7 @@ lib/
 ### 1. Clone the repository
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/task_manager_flutter.git
+git clone https://github.com/shagun101pareek/task_manager_flutter.git
 cd task_manager_flutter
 ```
 
