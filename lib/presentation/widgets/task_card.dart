@@ -16,6 +16,19 @@ class TaskCard extends StatelessWidget {
   final VoidCallback onToggleCompletion;
   final VoidCallback onEdit;
 
+  Color get _priorityColor {
+    switch (task.priority) {
+      case 'High':
+        return Colors.red;
+      case 'Medium':
+        return Colors.orange;
+      case 'Low':
+        return Colors.green;
+      default:
+        return AppColors.primary;
+    }
+  }
+
   String _formatDueDate(DateTime date) {
     const months = [
       'Jan',
@@ -55,9 +68,9 @@ class TaskCard extends StatelessWidget {
             children: [
               Container(
                 width: 4,
-                decoration: const BoxDecoration(
-                  color: AppColors.primary,
-                  borderRadius: BorderRadius.horizontal(
+                decoration: BoxDecoration(
+                  color: _priorityColor,
+                  borderRadius: const BorderRadius.horizontal(
                     left: Radius.circular(16),
                   ),
                 ),
@@ -102,7 +115,10 @@ class TaskCard extends StatelessWidget {
                               spacing: 8,
                               runSpacing: 4,
                               children: [
-                                _InfoChip(label: task.priority),
+                                _InfoChip(
+                                  label: task.priority,
+                                  color: _priorityColor,
+                                ),
                                 if (task.dueDate != null)
                                   _InfoChip(
                                     label: _formatDueDate(task.dueDate!),
@@ -126,43 +142,41 @@ class TaskCard extends StatelessWidget {
 }
 
 class _InfoChip extends StatelessWidget {
-  const _InfoChip({required this.label, this.icon});
+  const _InfoChip({
+    required this.label,
+    this.icon,
+    this.color,
+  });
 
   final String label;
   final IconData? icon;
+  final Color? color;
 
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
+    final chipColor = color ?? AppColors.primary;
 
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
       decoration: BoxDecoration(
-        color: isDark
-            ? AppColors.primary.withValues(alpha: 0.15)
-            : AppColors.primaryPale,
+        color: chipColor.withValues(alpha: isDark ? 0.2 : 0.12),
         borderRadius: BorderRadius.circular(20),
-        border: Border.all(
-          color: isDark ? AppColors.darkBorder : AppColors.border,
-        ),
+        border: Border.all(color: chipColor.withValues(alpha: 0.6)),
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
           if (icon != null) ...[
-            Icon(
-              icon,
-              size: 13,
-              color: isDark ? AppColors.primaryLight : AppColors.primaryDark,
-            ),
+            Icon(icon, size: 13, color: chipColor),
             const SizedBox(width: 4),
           ],
           Text(
             label,
             style: TextStyle(
-              color: isDark ? AppColors.primaryLight : AppColors.primaryDark,
+              color: chipColor,
               fontSize: 12,
-              fontWeight: FontWeight.w500,
+              fontWeight: FontWeight.w600,
             ),
           ),
         ],
