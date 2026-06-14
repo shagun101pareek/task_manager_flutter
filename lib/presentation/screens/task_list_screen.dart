@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../domain/enums/task_filter.dart';
 import '../providers/task_provider.dart';
 import '../widgets/task_filter_bar.dart';
 import 'add_task_screen.dart';
@@ -67,6 +66,14 @@ class _TaskListScreenState extends State<TaskListScreen> {
                           icon: const Icon(Icons.delete),
                           onPressed: () => provider.deleteTask(task.id),
                         ),
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (_) => AddTaskScreen(taskId: task.id),
+                            ),
+                          );
+                        },
                       );
                     },
                   ),

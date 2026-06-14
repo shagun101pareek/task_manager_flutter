@@ -53,6 +53,14 @@ class TaskProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  Future<void> updateTask(Task updatedTask) async {
+    final index = _tasks.indexWhere((task) => task.id == updatedTask.id);
+    if (index == -1) return;
+    _tasks[index] = updatedTask;
+    await _repository.saveTasks(_tasks);
+    notifyListeners();
+  }
+
   Future<void> deleteTask(String taskId) async {
     _tasks.removeWhere((task) => task.id == taskId);
     await _repository.saveTasks(_tasks);
@@ -71,5 +79,13 @@ class TaskProvider extends ChangeNotifier {
     if (_filter == filter) return;
     _filter = filter;
     notifyListeners();
+  }
+
+  Task? getTaskById(String taskId) {
+    try {
+      return _tasks.firstWhere((task) => task.id == taskId);
+    } catch (_) {
+      return null;
+    }
   }
 }
