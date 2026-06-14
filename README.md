@@ -2,6 +2,20 @@
 
 A Flutter mobile application for managing tasks with full offline support. Tasks are stored locally on the device using Hive, so data persists between app launches without any network connection.
 
+**Repository:** [github.com/shagun101pareek/task_manager_flutter](https://github.com/shagun101pareek/task_manager_flutter)
+
+## Screenshots
+
+| Task list | Add task |
+| :---: | :---: |
+| Search, filter tabs, priority colors, and due dates | Form with validation, priority picker, and optional due date |
+| ![Task list screen](docs/screenshots/task_list.png) | ![Add task screen](docs/screenshots/add_task.png) |
+
+| Due date picker |
+| :---: |
+| Material date picker when scheduling a task |
+| ![Due date picker](docs/screenshots/date_picker.png) |
+
 ## Features
 
 ### Core (Assignment Requirements)
@@ -147,20 +161,6 @@ adb install build/app/outputs/flutter-apk/app-release.apk
 * Priority stored as strings (`"Low"`, `"Medium"`, `"High"`) for simple JSON serialization.
 * Notifications scheduled at 9:00 AM on the due date; skipped for past dates and completed tasks.
 * Bonus features included but not required for core assignment evaluation.
-
-## Suggested Commit History
-
-```
-Initial Flutter setup
-Implement task model and provider
-Add task creation screen
-Implement task completion and deletion
-Add local persistence with Hive
-Implement task filtering
-Add task editing functionality
-Improve UI and animations
-Update README
-```
 
 ## Future Improvements
 
