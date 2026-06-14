@@ -11,4 +11,16 @@ class TaskProvider extends ChangeNotifier {
     _tasks.add(task);
     notifyListeners();
   }
+
+  void deleteTask(String taskId) {
+    _tasks.removeWhere((task) => task.id == taskId);
+    notifyListeners();
+  }
+
+  void toggleTaskCompletion(String taskId) {
+    final index = _tasks.indexWhere((task) => task.id == taskId);
+    if (index == -1) return;
+    _tasks[index].isCompleted = !_tasks[index].isCompleted;
+    notifyListeners();
+  }
 }

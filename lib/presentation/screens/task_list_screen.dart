@@ -9,19 +9,36 @@ class TaskListScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final tasks = context.watch<TaskProvider>().tasks;
+    final provider = context.watch<TaskProvider>();
 
     return Scaffold(
       appBar: AppBar(title: const Text('Task Manager')),
-      body: tasks.isEmpty
+      body: provider.tasks.isEmpty
           ? const Center(child: Text('No Tasks Yet'))
           : ListView.builder(
-              itemCount: tasks.length,
+              itemCount: provider.tasks.length,
               itemBuilder: (context, index) {
-                final task = tasks[index];
+                final task = provider.tasks[index];
                 return ListTile(
-                  title: Text(task.title),
+                  leading: Checkbox(
+                    value: task.isCompleted,
+                    onChanged: (_) {
+                      provider.toggleTaskCompletion(task.id);
+                    },
+                  ),
+                  title: Text(
+                    task.title,
+                    style: TextStyle(
+                      decoration: task.isCompleted
+                          ? TextDecoration.lineThrough
+                          : null,
+                    ),
+                  ),
                   subtitle: Text(task.priority),
+                  trailing: IconButton(
+                    icon: const Icon(Icons.delete),
+                    onPressed: () => provider.deleteTask(task.id),
+                  ),
                 );
               },
             ),
