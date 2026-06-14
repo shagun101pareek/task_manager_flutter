@@ -1,7 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import 'presentation/providers/task_provider.dart';
+import 'presentation/screens/task_list_screen.dart';
 
 void main() {
-  runApp(const TaskManagerApp());
+  runApp(
+    ChangeNotifierProvider(
+      create: (_) => TaskProvider(),
+      child: const TaskManagerApp(),
+    ),
+  );
 }
 
 class TaskManagerApp extends StatelessWidget {
@@ -11,10 +20,7 @@ class TaskManagerApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Task Manager',
-      home: Scaffold(
-        appBar: AppBar(title: const Text('Task Manager')),
-        body: const Center(child: Text('Task Manager')),
-      ),
+      home: const TaskListScreen(),
     );
   }
 }
